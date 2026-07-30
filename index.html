@@ -1,0 +1,1977 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Beauty Time — СПА-студии в Щёлково и Королёве</title>
+<meta name="description" content="Beauty Time — уникальное пространство для отдыха и красоты. Более 30 программ массажа, обёртываний и ухода за лицом и телом. Люкс-косметика Comfort Zone, Dr. Schrammek, Rhea." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          heading: ["Instrument Serif", "Playfair Display", "serif"],
+          body: ["Barlow", "Manrope", "sans-serif"],
+        },
+        colors: {
+          plum: "#0B0410",
+          accent: { DEFAULT: "#A855F7", deep: "#6D28D9", soft: "#E9D5FF" },
+        },
+        borderRadius: { DEFAULT: "9999px" },
+      },
+    },
+  };
+</script>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.js"></script>
+<script>
+  // UMD-сборка framer-motion экспортирует глобал Motion; FramerMotion существует не во всех версиях.
+  window.Motion = window.FramerMotion || window.Motion;
+  (function () {
+    var _err = console.error;
+    console.error = function () {
+      var s = String(arguments[0] || "");
+      if (s.indexOf('unique "key"') > -1 || s.indexOf("Each child in a list") > -1) return;
+      return _err.apply(console, arguments);
+    };
+  })();
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: #000; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
+
+  .liquid-glass {
+    background: rgba(255, 255, 255, 0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg,
+      rgba(237, 222, 255, 0.45) 0%,
+      rgba(237, 222, 255, 0.15) 20%,
+      rgba(237, 222, 255, 0) 40%,
+      rgba(237, 222, 255, 0) 60%,
+      rgba(237, 222, 255, 0.15) 80%,
+      rgba(237, 222, 255, 0.45) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .liquid-glass-strong {
+    background: rgba(168, 85, 247, 0.08);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    border: none;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.15),
+      0 0 32px rgba(168, 85, 247, 0.25);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass-strong::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg,
+      rgba(237, 222, 255, 0.5) 0%,
+      rgba(237, 222, 255, 0.2) 20%,
+      rgba(237, 222, 255, 0) 40%,
+      rgba(237, 222, 255, 0) 60%,
+      rgba(237, 222, 255, 0.2) 80%,
+      rgba(237, 222, 255, 0.5) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Подсветка стеклянных плашек: наведение курсора и касание на мобильных.
+     .is-active вешает JS по касанию — на телефоне подсветка держится до касания другой плашки. */
+  .liquid-glass,
+  .liquid-glass-strong {
+    transition: background-color 0.28s ease, box-shadow 0.28s ease;
+  }
+  .liquid-glass:hover,
+  .liquid-glass.is-active {
+    background-color: rgba(168, 85, 247, 0.18);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.22), 0 0 28px rgba(168, 85, 247, 0.45);
+  }
+  .liquid-glass-strong:hover,
+  .liquid-glass-strong.is-active {
+    background-color: rgba(168, 85, 247, 0.24);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.28),
+      0 0 40px rgba(168, 85, 247, 0.55);
+  }
+
+  /* У вложенных плашек подсвечивается только та, на которой курсор. */
+  @supports selector(:has(*)) {
+    .liquid-glass:hover:has(.liquid-glass:hover) {
+      background-color: rgba(255, 255, 255, 0.01);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    }
+    .liquid-glass-strong:hover:has(.liquid-glass:hover) {
+      background-color: rgba(168, 85, 247, 0.08);
+      box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.15),
+        0 0 32px rgba(168, 85, 247, 0.25);
+    }
+  }
+
+  /* Плашки, закрытые фотографией: цвет даёт накладка, а не фон. */
+  .hi-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(168, 85, 247, 0.42) 0%, rgba(109, 40, 217, 0.3) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .liquid-glass:hover .hi-overlay,
+  .liquid-glass.is-active .hi-overlay { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .liquid-glass,
+    .liquid-glass-strong,
+    .hi-overlay { transition: none; }
+  }
+
+  /* Ken Burns: медленный зум кадра. Затухание слоёв — только через rAF в JS. */
+  @keyframes kb-drift {
+    0%   { transform: scale(1.04) translate3d(0, 0, 0); }
+    100% { transform: scale(1.16) translate3d(-1.5%, -1.5%, 0); }
+  }
+  .kb-anim { animation: kb-drift 26s ease-in-out infinite alternate; will-change: transform; }
+  @media (prefers-reduced-motion: reduce) { .kb-anim { animation: none; } }
+
+  .glow-violet::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 900px;
+    height: 900px;
+    max-width: 130vw;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.28) 0%, rgba(109, 40, 217, 0.12) 40%, rgba(0, 0, 0, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  ::-webkit-scrollbar { width: 9px; }
+  ::-webkit-scrollbar-track { background: #0b0410; }
+  ::-webkit-scrollbar-thumb { background: #4c1d95; border-radius: 9999px; }
+
+  /* Панель управления */
+  .adm-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    padding: 9px 12px;
+    color: #fff;
+    font-family: Barlow, Manrope, sans-serif;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  .adm-input:focus { outline: none; border-color: #a855f7; background: rgba(168, 85, 247, 0.08); }
+  .adm-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255, 255, 255, 0.5); }
+  .adm-btn {
+    border-radius: 12px;
+    padding: 9px 16px;
+    font-size: 14px;
+    font-family: Barlow, Manrope, sans-serif;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .adm-btn:hover { background: rgba(255, 255, 255, 0.12); }
+  .adm-btn-primary { background: #a855f7; border-color: #a855f7; }
+  .adm-btn-primary:hover { background: #9333ea; }
+  .adm-btn-danger { color: #fca5a5; border-color: rgba(248, 113, 113, 0.35); }
+  .adm-btn-icon { padding: 4px 9px; font-size: 13px; border-radius: 9px; }
+</style>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  // ===== Контент сайта. Всё, что редактируется из панели, живёт здесь. =====
+  window.DEFAULT_CONTENT = {
+    version: 1,
+    // Пароль хранится хэшем. По умолчанию: admin / BeautyTime2026
+    auth: { user: "admin", hash: "70159c8e8021e70ed9b7329e153d8ad91298a13e8c13d45bbbfead91a5ae34ec" },
+
+    brand: { name: "Beauty Time", logo: "assets/kb-02.webp" },
+
+    nav: [
+      { label: "Главная", href: "#home" },
+      { label: "Услуги", href: "#services" },
+      { label: "Прайс", href: "#pricing" },
+      { label: "Атмосфера", href: "#gallery" },
+      { label: "Контакты", href: "#contacts" },
+    ],
+    navCta: "Записаться",
+
+    hero: {
+      slides: ["assets/kb-11.webp", "assets/kb-06.png", "assets/kb-08.png", "assets/kb-04.jpg"],
+      badgeChip: "−10%",
+      badgeText: "Скидка на первое посещение за подписку в Telegram",
+      title: "Уникальное пространство отдыха и красоты",
+      subtitle:
+        "Более 30 программ массажа, обёртываний и ухода за лицом и телом с мгновенным эффектом. Только люкс-косметика, авторские техники и глубокое расслабление — два часа отпуска от стресса в студиях Щёлково и Королёва.",
+      ctaPrimary: "Записаться онлайн",
+      ctaSecondary: "Смотреть программы",
+      stats: [
+        { value: "30+", label: "Программ для лица и тела" },
+        { value: "2", label: "Студии: Щёлково и Королёв" },
+      ],
+      partnersChip: "Работаем только на люкс-косметике",
+      brands: ["Comfort Zone", "Dr. Schrammek", "Rhea", "Selvert Thermal", "La Sinsere"],
+    },
+
+    services: {
+      slides: ["assets/kb-07.png", "assets/kb-03.jpg", "assets/kb-09.png", "assets/kb-10.png"],
+      kicker: "// Услуги",
+      titleLine1: "Красота,",
+      titleLine2: "переосмысленная",
+      cards: [
+        {
+          icon: "drop",
+          title: "Уходы для лица",
+          tags: ["Витамин С", "Биорепил", "Choku-Koku", "HYDRAMEMORY"],
+          text: "Массажи, пилинги, маски и комплексные уходы: от японского скульптурного Choku-Koku до глубокого увлажнения HYDRAMEMORY. Видимый лифтинг и чистая кожа уже после первой процедуры.",
+        },
+        {
+          icon: "leaf",
+          title: "Ритуалы для тела",
+          tags: ["Стоун-массаж", "Обёртывания", "Винотерапия", "Кедровая бочка"],
+          text: "Массажи руками, блейдами и бамбуковыми палочками, обёртывания ламинарией, детокс Bormio и кедровая бочка. Глубокая проработка зажимов и восстановление кожи.",
+        },
+        {
+          icon: "sparkle",
+          title: "SPA-программы",
+          tags: ["Тоскана", "День массажа", "Для него и для неё", "Сертификат"],
+          text: "Программы на 2–3 часа для одного или для двоих: ароматерапия, уход по лицу и телу, чай с алтайскими травами. Ощущение, будто побывали на лучшем SPA-курорте.",
+        },
+      ],
+      features: ["Более 30 программ", "Только люкс-косметика", "Авторские техники и аксессуары", "Максимальное расслабление"],
+    },
+
+    pricing: {
+      kicker: "// Прайс",
+      titleLine1: "Программы",
+      titleLine2: "и цены",
+      tabFace: "Лицо",
+      tabBody: "Тело",
+      face: [
+        {
+          t: "Уход «Энергия с витамином С»",
+          d: "50 / 90 / 120 мин",
+          p: "5 500 – 8 000 ₽",
+          x: "Для кожи, требующей осветления, детокса и глубокой проработки мышц: ароматерапия, стретчинг-массаж, очищение, пилинг, массаж руллаж, нефритовый роллер, гуаша, маска сияние с витамином С, крем.",
+          r: "Более чёткие контуры лица, мгновенный лифтинг-эффект.",
+        },
+        {
+          t: "Пилинг Биорепил + У/З чистка лица",
+          d: "60 мин",
+          p: "5 900 ₽",
+          x: "Безопасный двухфазный пилинг: мощный эффект лифтинга, тонус, устранение пигментации, коррекция морщин. Проводится в любое время года.",
+          r: "",
+        },
+        {
+          t: "Пилинг Биорепил: лицо, шея, декольте",
+          d: "",
+          p: "8 500 ₽",
+          x: "Тот же двухфазный пилинг с расширенной зоной — лицо, шея и декольте прорабатываются за один визит.",
+          r: "",
+        },
+        {
+          t: "Японский массаж Choku-Koku",
+          d: "60 мин",
+          p: "4 000 ₽",
+          x: "Глубокий скульптурный массаж по высоким японским технологиям. Видимый эффект после первой процедуры.",
+          r: "Лифтинг, кожа без отёков, снятие зажимов.",
+        },
+        {
+          t: "Корейский массаж по японской маске",
+          d: "70 мин",
+          p: "4 000 ₽",
+          x: "Активная высокоэффективная методика омоложения и подтяжки тканей: воротниковая зона, лопатки, лицо и голова.",
+          r: "Выраженный лифтинг-эффект.",
+        },
+        {
+          t: "Скульптурный массаж лица",
+          d: "60 мин",
+          p: "4 000 ₽",
+          x: "Техника ручного массажа с глубоким воздействием на мышцы лица.",
+          r: "Улучшается овал лица, тонус и эластичность.",
+        },
+        {
+          t: "Тотальное омоложение Selvert Thermal",
+          d: "120 мин",
+          p: "8 000 ₽",
+          x: "Ароматерапия, пилинг, корейский массаж, уникальная маска, ампульный концентрат, крем и массаж рук.",
+          r: "Чистая здоровая кожа, чёткий овал, расслабление мышц лица, век, шеи и лопаток.",
+        },
+        {
+          t: "Уход «Морской релакс»",
+          d: "80 мин",
+          p: "6 500 ₽",
+          x: "Омолаживающий, интенсивно увлажняющий и витаминный уход по типу кожи: ароматерапия, пилинг, испанский массаж, маска, крем и BB, массаж рук.",
+          r: "Кожа увлажнена, подтянута и готова к выходу в свет.",
+        },
+        {
+          t: "FRESH UP",
+          d: "80 мин",
+          p: "7 200 ₽",
+          x: "Очищение, травяной пилинг, ампульный концентрат, альгинатная маска из морских водорослей, крем и BB-крем.",
+          r: "Чистая обновлённая кожа, сокращённые поры, моментальный лифтинг.",
+        },
+        {
+          t: "GREEN PEEL ENERGY",
+          d: "70 мин",
+          p: "8 400 ₽",
+          x: "Мощная омолаживающая программа: очищение, травяной пилинг, ампульный концентрат, маска, крем, BB-крем.",
+          r: "Радикальный лифтинг-эффект, разглаживание морщин, повышение эластичности.",
+        },
+        {
+          t: "Уход для молодой кожи",
+          d: "90 мин",
+          p: "5 500 ₽",
+          x: "Комплексная терапия для комбинированной и жирной кожи: глубокое очищение, обновление, детокс, коррекция акне.",
+          r: "Чистая матовая кожа без покраснений.",
+        },
+        {
+          t: "Глубокое увлажнение HYDRAMEMORY",
+          d: "90 мин",
+          p: "6 600 ₽",
+          x: "Эксклюзивный уход, альтернатива мезотерапии: фирменный пилинг, массаж по омолаживающему крему, массаж кисточками по маске с гиалуроновой кислотой, сыворотка, крем, массаж рук или головы.",
+          r: "Восполнение гидробаланса и восстановление нервной системы за счёт трёх массажей.",
+        },
+      ],
+      body: [
+        {
+          t: "День релакса в стиле «Тоскана»",
+          d: "165 мин",
+          p: "11 500 ₽",
+          x: "Уход лица «Про Коллаген» на косметике Comfort Zone из Пармы и классический массаж тела.",
+          r: "Уплотнение кожи, лифтинг, сияние.",
+        },
+        {
+          t: "День массажа",
+          d: "150 мин",
+          p: "10 700 ₽",
+          x: "Массаж тела на выбор руками и бамбуковыми палочками под этническую музыку (90 мин) и японский Choku-Koku по лицу, шее, декольте и голове с маской La Sinsere (60 мин).",
+          r: "Лифтинговый и дренажный эффект, глубокий релакс.",
+        },
+        {
+          t: "Каменный цветок",
+          d: "120 мин",
+          p: "6 500 ₽",
+          x: "Кедровая бочка (15–20 мин), скрабирование морской солью с цитрусовыми маслами и полифенолами винограда (30 мин), стоун-массаж (60 мин), чай с алтайскими травами.",
+          r: "",
+        },
+        {
+          t: "ПРЕМИУМ обёртывание с ламинарией",
+          d: "120 мин",
+          p: "6 500 ₽",
+          x: "Скрабирование солевым или сахарным скрабом, обёртывание ламинарией, массаж тела. Рекомендуем добавить кедровую бочку.",
+          r: "Кожа увлажнена, уходят отёки, снижение веса.",
+        },
+        {
+          t: "ДЕНЬ МАССАЖА",
+          d: "120 мин",
+          p: "7 900 ₽",
+          x: "Компресс по фитобейну, массаж всего тела (со стоун-массажем или без), массаж лица и маска.",
+          r: "Расслабленные мышцы тела и лица, восстановление энергии.",
+        },
+        {
+          t: "RELAX E`TRANQUILLA",
+          d: "150 мин",
+          p: "11 500 ₽",
+          x: "Расслабляющий массаж кисточками и руками по маслу Tranquillity Pro-Slip и уход по лицу Comfort Zone на выбор: HYDRAMEMORY или SKIN REGIMEN (60 мин).",
+          r: "Восстановление психоэмоционального фона, напитанная кожа тела, сияние лица.",
+        },
+        {
+          t: "SPA для него и для неё",
+          d: "180 мин",
+          p: "15 600 ₽",
+          x: "Приветственный аромамассаж, массаж тела на выбор для двоих, для неё — массаж лица (60 мин), для него — массаж лица, шеи и головы (60 мин).",
+          r: "Совместный уход даёт энергию и помогает отдохнуть от стресса.",
+        },
+        {
+          t: "Винотерапия. Секрет Клеопатры",
+          d: "90 мин",
+          p: "7 200 ₽",
+          x: "Ароматерапия, скрабирование морской солью с эфирными маслами, антицеллюлитное омолаживающее обёртывание, массаж по крему.",
+          r: "Ровная увлажнённая кожа без отёков и целлюлита, восстановление сил.",
+        },
+        {
+          t: "Массаж-скрабирование «Единение души и тела»",
+          d: "80 мин",
+          p: "5 800 ₽",
+          x: "Ритуал очищения тела вулканическим скрабом, вдохновлённый традициями древних культур.",
+          r: "Мгновенная чистота кожи и долгий эффект шелковистости.",
+        },
+        {
+          t: "Bormio Comfort Zone",
+          d: "90 мин",
+          p: "7 200 ₽",
+          x: "Интенсивный дренирующий детокс-уход с термальной водой источника Бормио. Фукус и ламинария оказывают липолитическое действие.",
+          r: "Кожа без целлюлита и отёков, насыщена микроэлементами.",
+        },
+        {
+          t: "TRANQUILLITY PRO-SLEEP",
+          d: "80 мин",
+          p: "6 300 ₽",
+          x: "Массаж всего тела специальными кисточками и маслом Comfort Zone Tranquillity.",
+          r: "Состояние глубокого покоя и баланса, восстановление сил.",
+        },
+        { t: "Стоун-терапия", d: "60 мин", p: "3 900 ₽", x: "Общий массаж тела с горячими камнями.", r: "" },
+        { t: "Общий массаж тела с блейдами", d: "60 мин", p: "3 900 ₽", x: "Массаж всего тела с использованием блейдов.", r: "" },
+        {
+          t: "Омоложение и упругость",
+          d: "90 мин",
+          p: "6 900 ₽",
+          x: "Пилинг, маска с органическим маслом таману, массаж, укрепляющий крем. Для сухой кожи со сниженным тургором, после загара, для профилактики растяжек.",
+          r: "",
+        },
+        {
+          t: "Кедровая бочка",
+          d: "20–30 мин",
+          p: "1 000 ₽",
+          x: "Подготовка кожи к скрабированию или массажу, расслабление перед уходами по телу.",
+          r: "",
+        },
+        {
+          t: "Аппарат RESOLADY, 1 зона",
+          d: "лицо / тело",
+          p: "2 500 ₽",
+          x: "Создание контуров тела, борьба с жировыми отложениями и целлюлитом, улучшение кровообращения и овала лица, лимфодренаж.",
+          r: "",
+        },
+      ],
+    },
+
+    gallery: {
+      kicker: "// Атмосфера",
+      titleLine1: "Два часа отпуска",
+      titleLine2: "от стресса",
+      photos: [
+        "assets/kb-11.webp",
+        "assets/kb-06.png",
+        "assets/kb-08.png",
+        "assets/kb-09.png",
+        "assets/kb-04.jpg",
+        "assets/kb-10.png",
+      ],
+      quote:
+        "«Была в этом салоне на общем массаже по подарочному сертификату! Всё на высшем уровне. Атмосфера очень приятная, чисто, уютно, безумно вежливый и приветливый персонал. Рекомендую это место и рада, что открыла его для себя!»",
+      quoteAuthor: "Наталья Журавлева · отзыв на Яндекс.Картах",
+    },
+
+    promo: {
+      kicker: "// Подарочный сертификат",
+      titleLine1: "Идеальный подарок",
+      titleLine2: "для любимых",
+      text: "Подарите роскошные СПА-уходы от студии Beauty Time в праздничном сертификате. Можно подарить конкретный ритуал или сертификат на сумму от 3900 ₽ — наш менеджер поможет с выбором.",
+      certLabel: "Купить сертификат",
+      certUrl: "https://taplink.cc/beautytime_studio/o/c547fd/",
+      tgLabel: "Telegram: −10% на первое посещение",
+      cosmetics: [
+        { image: "assets/brand-comfortzone.webp", name: "Comfort Zone", note: "Италия, Парма" },
+        { image: "assets/brand-schrammek.jpg", name: "Dr. Schrammek", note: "Германия" },
+      ],
+    },
+
+    contacts: {
+      kicker: "// Студии",
+      titleLine1: "Запишитесь",
+      titleLine2: "в один клик",
+      bookLabel: "Записаться онлайн",
+      studios: [
+        {
+          city: "Щёлково",
+          address: "ул. Комарова, 2",
+          phone: "+7 985 351-91-68",
+          tel: "tel:+79853519168",
+          booking: "https://dikidi.ru/1770252",
+          map: "https://maps.google.com/?q=55.92256785,37.99801389&z=16",
+        },
+        {
+          city: "Королёв",
+          address: "мкр Юбилейный, ул. Лесная, 14а",
+          phone: "+7 916 423-47-86",
+          tel: "tel:+79164234786",
+          booking: "https://dikidi.ru/1856372",
+          map: "https://maps.google.com/?q=55.934006,37.837328&z=16",
+        },
+      ],
+      hoursLine1: "ПН — ПТ: с 9:00 до 21:00",
+      hoursLine2: "СБ — ВС: с 10:00 до 20:00",
+      telegram: "https://t.me/beautytime_spa",
+      vk: "https://vk.me/beautytime_ctudia",
+      footer: "Сеть СПА-студий в Щёлково и Королёве · Уникальное пространство для отдыха и красоты",
+    },
+  };
+</script>
+
+<script type="text/babel">
+  // ===== Хранилище контента: content.json → localStorage → состояние React =====
+  const STORAGE_KEY = "bt_content_v1";
+  const SESSION_KEY = "bt_admin_session";
+
+  // Компактная реализация SHA-256 (crypto.subtle недоступен при открытии файла с диска).
+  function sha256(ascii) {
+    function rightRotate(value, amount) {
+      return (value >>> amount) | (value << (32 - amount));
+    }
+    const mathPow = Math.pow;
+    const maxWord = mathPow(2, 32);
+    let i, j, result = "";
+    const words = [];
+    const asciiBitLength = ascii.length * 8;
+
+    let hash = (sha256.h = sha256.h || []);
+    const k = (sha256.k = sha256.k || []);
+    let primeCounter = k.length;
+
+    const isComposite = {};
+    for (let candidate = 2; primeCounter < 64; candidate++) {
+      if (!isComposite[candidate]) {
+        for (i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+        hash[primeCounter] = (mathPow(candidate, 0.5) * maxWord) | 0;
+        k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+      }
+    }
+
+    ascii += "\x80";
+    while ((ascii.length % 64) - 56) ascii += "\x00";
+    for (i = 0; i < ascii.length; i++) {
+      j = ascii.charCodeAt(i);
+      if (j >> 8) return "";
+      words[i >> 2] |= j << (((3 - i) % 4) * 8);
+    }
+    words[words.length] = (asciiBitLength / maxWord) | 0;
+    words[words.length] = asciiBitLength;
+
+    for (j = 0; j < words.length; ) {
+      const w = words.slice(j, (j += 16));
+      const oldHash = hash;
+      hash = hash.slice(0, 8);
+
+      for (i = 0; i < 64; i++) {
+        const w15 = w[i - 15];
+        const w2 = w[i - 2];
+        const a = hash[0];
+        const e = hash[4];
+        const temp1 =
+          hash[7] +
+          (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25)) +
+          ((e & hash[5]) ^ (~e & hash[6])) +
+          k[i] +
+          (w[i] =
+            i < 16
+              ? w[i]
+              : (w[i - 16] +
+                  (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3)) +
+                  w[i - 7] +
+                  (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))) |
+                0);
+        const temp2 =
+          (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22)) +
+          ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+        hash = [(temp1 + temp2) | 0].concat(hash);
+        hash[4] = (hash[4] + temp1) | 0;
+      }
+
+      for (i = 0; i < 8; i++) hash[i] = (hash[i] + oldHash[i]) | 0;
+    }
+
+    for (i = 0; i < 8; i++) {
+      for (j = 3; j + 1; j--) {
+        const b = (hash[i] >> (j * 8)) & 255;
+        result += (b < 16 ? 0 : "") + b.toString(16);
+      }
+    }
+    return result;
+  }
+
+  function hashPassword(pass) {
+    // UTF-8, чтобы кириллический пароль тоже считался.
+    return sha256(unescape(encodeURIComponent(String(pass))));
+  }
+
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+
+  // Глубокое слияние: недостающие поля берём из значений по умолчанию.
+  function merge(base, patch) {
+    if (Array.isArray(base) || Array.isArray(patch)) return patch === undefined ? base : patch;
+    if (base && typeof base === "object" && patch && typeof patch === "object") {
+      const out = {};
+      Object.keys(base).forEach((key) => (out[key] = merge(base[key], patch[key])));
+      Object.keys(patch).forEach((key) => { if (!(key in out)) out[key] = patch[key]; });
+      return out;
+    }
+    return patch === undefined ? base : patch;
+  }
+
+  async function loadContent() {
+    let base = clone(window.DEFAULT_CONTENT);
+    // content.json рядом с сайтом (после выгрузки из панели) — источник для всех посетителей.
+    try {
+      const res = await fetch("content.json", { cache: "no-store" });
+      if (res.ok) base = merge(base, await res.json());
+    } catch (e) {
+      /* открыт с диска или файла нет — работаем на значениях по умолчанию */
+    }
+    // Локальный черновик этого браузера перекрывает всё.
+    let local = null;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) local = JSON.parse(raw);
+    } catch (e) {
+      /* повреждённый черновик игнорируем */
+    }
+    return { content: local ? merge(base, local) : base, published: base, hasLocal: !!local };
+  }
+
+  window.Store = { STORAGE_KEY, SESSION_KEY, hashPassword, sha256, clone, merge, loadContent };
+</script>
+
+<script type="text/babel">
+  function ArrowUpRight({ className = "h-4 w-4" }) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+        strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 17L17 7" />
+        <path d="M7 7h10v10" />
+      </svg>
+    );
+  }
+
+  function Play({ className = "h-4 w-4" }) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+        <polygon points="6 4 20 12 6 20 6 4" />
+      </svg>
+    );
+  }
+
+  function Sparkle({ className = "h-6 w-6" }) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2l2.2 6.3L21 10.5l-6.8 2.2L12 19l-2.2-6.3L3 10.5l6.8-2.2L12 2Z" />
+      </svg>
+    );
+  }
+
+  function Pin({ className = "h-6 w-6" }) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2c-3.9 0-7 3.1-7 7 0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z" />
+      </svg>
+    );
+  }
+
+  function Drop({ className = "h-6 w-6" }) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2.7S5.5 9.6 5.5 14a6.5 6.5 0 0 0 13 0c0-4.4-6.5-11.3-6.5-11.3Z" />
+      </svg>
+    );
+  }
+
+  function Leaf({ className = "h-6 w-6" }) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20 3c-9.4 0-14 4.4-14 10.2 0 1.6.4 3 1.2 4.2L4 20.6 5.4 22l3.2-3.2c1.2.8 2.6 1.2 4.2 1.2C18.6 20 20 12.4 20 3Z" />
+      </svg>
+    );
+  }
+
+  function Clock({ className = "h-6 w-6" }) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"
+        strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3.2 1.9" />
+      </svg>
+    );
+  }
+
+  function Lock({ className = "h-6 w-6" }) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"
+        strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="10" width="16" height="11" rx="2.5" />
+        <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+      </svg>
+    );
+  }
+
+  function Telegram({ className = "h-5 w-5" }) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M21.9 4.3 18.9 19c-.2 1-.8 1.2-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.3-4.8 8.7-7.9c.4-.3-.1-.5-.6-.2L6.1 12.8 1.5 11.4c-1-.3-1-1 .2-1.5l19-7.3c.8-.3 1.5.2 1.2 1.7Z" />
+      </svg>
+    );
+  }
+
+  function VK({ className = "h-5 w-5" }) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.8 17c-5.2 0-8.4-3.6-8.5-9.5h2.6c.1 4.4 2.1 6.3 3.6 6.7V7.5h2.5v3.8c1.5-.2 3-1.9 3.6-3.8h2.4c-.4 2.3-2 4-3.2 4.7 1.2.6 3 2.1 3.7 4.8h-2.7c-.5-1.7-1.9-3-3.8-3.2V17h-.2Z" />
+      </svg>
+    );
+  }
+
+  window.Icons = { ArrowUpRight, Play, Sparkle, Pin, Drop, Leaf, Clock, Lock, Telegram, VK };
+  window.CardIcons = { sparkle: Sparkle, drop: Drop, leaf: Leaf, pin: Pin, clock: Clock };
+</script>
+
+<script type="text/babel">
+  const FADE_MS = 500;
+
+  function KenBurns({ slides, className = "", style, objectPos = "object-center", holdMs = 6500 }) {
+    const layers = React.useRef([]);
+    const rafs = React.useRef({});
+    const current = React.useRef(0);
+
+    React.useEffect(() => {
+      const fadeTo = (el, key, target, duration) => {
+        if (!el) return;
+        if (rafs.current[key]) cancelAnimationFrame(rafs.current[key]);
+        const from = parseFloat(el.style.opacity || "0");
+        const start = performance.now();
+        const step = (now) => {
+          const p = Math.min(1, (now - start) / duration);
+          el.style.opacity = String(from + (target - from) * p);
+          if (p < 1) rafs.current[key] = requestAnimationFrame(step);
+          else delete rafs.current[key];
+        };
+        rafs.current[key] = requestAnimationFrame(step);
+      };
+
+      current.current = 0;
+      layers.current.forEach((el) => { if (el) el.style.opacity = "0"; });
+      const first = layers.current[0];
+      if (first) {
+        if (first.complete) fadeTo(first, 0, 1, FADE_MS);
+        else first.addEventListener("load", () => fadeTo(first, 0, 1, FADE_MS), { once: true });
+      }
+
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let timer = null;
+      if (!reduce && slides.length > 1) {
+        timer = setInterval(() => {
+          const cur = current.current;
+          const next = (cur + 1) % slides.length;
+          fadeTo(layers.current[cur], cur, 0, FADE_MS);
+          fadeTo(layers.current[next], next, 1, FADE_MS);
+          current.current = next;
+        }, holdMs);
+      }
+
+      const rafStore = rafs.current;
+      return () => {
+        if (timer) clearInterval(timer);
+        Object.keys(rafStore).forEach((key) => cancelAnimationFrame(rafStore[key]));
+      };
+    }, [slides, holdMs]);
+
+    return (
+      <div className={"absolute overflow-hidden " + className} style={style}>
+        {slides.map((src, i) => (
+          <img
+            key={src + i}
+            ref={(el) => (layers.current[i] = el)}
+            src={src}
+            alt=""
+            aria-hidden="true"
+            className={"absolute inset-0 w-full h-full object-cover kb-anim " + objectPos}
+            style={{ opacity: 0, animationDelay: -(i * 5) + "s" }}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  window.KenBurns = KenBurns;
+</script>
+
+<script type="text/babel">
+  const { motion } = window.Motion;
+
+  function BlurText({ text, className = "", delay = 100 }) {
+    const ref = React.useRef(null);
+    const [inView, setInView] = React.useState(false);
+
+    React.useEffect(() => {
+      const el = ref.current;
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            setInView(true);
+            obs.unobserve(el);
+          }
+        },
+        { threshold: 0.1 }
+      );
+      obs.observe(el);
+      return () => obs.disconnect();
+    }, []);
+
+    const words = String(text).split(" ");
+
+    return (
+      <p
+        ref={ref}
+        className={className}
+        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", rowGap: "0.1em" }}
+      >
+        {words.map((word, i) => (
+          <motion.span
+            key={word + i}
+            style={{ display: "inline-block", marginRight: "0.28em", willChange: "transform, filter, opacity" }}
+            initial={{ filter: "blur(10px)", opacity: 0, y: 50 }}
+            animate={
+              inView
+                ? { filter: ["blur(10px)", "blur(5px)", "blur(0px)"], opacity: [0, 0.5, 1], y: [50, -5, 0] }
+                : {}
+            }
+            transition={{ duration: 0.7, times: [0, 0.5, 1], ease: "easeOut", delay: (i * delay) / 1000 }}
+          >
+            {word}
+          </motion.span>
+        ))}
+      </p>
+    );
+  }
+
+  window.BlurText = BlurText;
+</script>
+
+<script type="text/babel">
+  const { motion } = window.Motion;
+  const { ArrowUpRight, Play, Sparkle, Pin, Clock, Telegram, VK } = window.Icons;
+  const { KenBurns, BlurText } = window;
+
+  const ContentCtx = React.createContext(window.DEFAULT_CONTENT);
+  const useContent = () => React.useContext(ContentCtx);
+  window.ContentCtx = ContentCtx;
+
+  const rise = (delay) => ({
+    initial: { filter: "blur(10px)", opacity: 0, y: 20 },
+    animate: { filter: "blur(0px)", opacity: 1, y: 0 },
+    transition: { duration: 0.8, ease: "easeOut", delay },
+  });
+
+  const inView = (delay) => ({
+    initial: { filter: "blur(10px)", opacity: 0, y: 24 },
+    whileInView: { filter: "blur(0px)", opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.2 },
+    transition: { duration: 0.6, ease: "easeOut", delay },
+  });
+
+  function Navbar() {
+    const c = useContent();
+    return (
+      <header className="fixed top-4 left-0 right-0 z-50 px-4 md:px-8 lg:px-16">
+        <div className="flex items-center justify-between gap-4">
+          <a href="#home" className="flex items-center gap-3 shrink-0">
+            <span className="liquid-glass rounded-full h-12 w-12 flex items-center justify-center shrink-0">
+              <img src={c.brand.logo} alt={c.brand.name} className="h-12 w-12 object-cover rounded-full" />
+            </span>
+            <span className="font-heading italic text-white text-xl leading-none hidden sm:block">{c.brand.name}</span>
+          </a>
+
+          <nav className="liquid-glass rounded-full px-1.5 py-1.5 hidden lg:flex items-center">
+            {c.nav.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className="px-3 py-2 text-sm font-medium text-white/90 font-body rounded-full hover:bg-white/15 hover:text-white transition-colors"
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
+
+          <a
+            href="#contacts"
+            className="liquid-glass-strong rounded-full px-4 md:px-5 py-2.5 text-sm font-medium text-white font-body flex items-center gap-1.5 whitespace-nowrap shrink-0"
+          >
+            {c.navCta}
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
+        </div>
+      </header>
+    );
+  }
+
+  function Hero() {
+    const c = useContent();
+    const h = c.hero;
+    return (
+      <section id="home" className="relative min-h-screen bg-plum overflow-hidden flex flex-col">
+        <KenBurns
+          slides={h.slides}
+          className="left-1/2 top-0 -translate-x-1/2 z-0"
+          style={{ width: "120%", height: "120%" }}
+          objectPos="object-top"
+        />
+        <div className="absolute inset-0 z-[1] bg-accent-deep/45 mix-blend-color pointer-events-none" />
+        <div className="absolute inset-0 z-[2] bg-gradient-to-b from-plum/70 via-plum/25 to-plum pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col min-h-screen">
+          <Navbar />
+
+          <div className="flex-1 flex flex-col items-center justify-center text-center pt-28 md:pt-24 px-4">
+            <motion.a
+              href={c.contacts.telegram}
+              target="_blank"
+              rel="noreferrer"
+              {...rise(0.4)}
+              className="liquid-glass rounded-full flex items-center gap-3 pr-3"
+            >
+              <span className="bg-accent text-white rounded-full px-3 py-1 text-xs font-semibold font-body">
+                {h.badgeChip}
+              </span>
+              <span className="text-sm text-white/90 font-body">{h.badgeText}</span>
+            </motion.a>
+
+            <div className="mt-6">
+              <BlurText
+                key={h.title}
+                text={h.title}
+                className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-heading italic text-white leading-[0.8] max-w-3xl justify-center tracking-[-3px] md:tracking-[-4px]"
+              />
+            </div>
+
+            <motion.p {...rise(0.8)} className="mt-4 text-sm md:text-base text-white max-w-2xl font-body font-light leading-tight">
+              {h.subtitle}
+            </motion.p>
+
+            <motion.div {...rise(1.1)} className="flex items-center gap-6 mt-6">
+              <a
+                href="#contacts"
+                className="liquid-glass-strong rounded-full px-5 py-2.5 text-sm font-medium text-white font-body flex items-center gap-2"
+              >
+                {h.ctaPrimary}
+                <ArrowUpRight className="h-5 w-5" />
+              </a>
+              <a href="#pricing" className="text-sm font-medium text-white font-body flex items-center gap-2">
+                {h.ctaSecondary}
+                <Play className="h-4 w-4" />
+              </a>
+            </motion.div>
+
+            <motion.div {...rise(1.3)} className="flex items-stretch gap-4 mt-7">
+              {h.stats.map((s, i) => (
+                <div key={s.label + i} className="liquid-glass p-5 w-[170px] sm:w-[220px] rounded-[1.25rem] text-left">
+                  {i === 0 ? <Sparkle className="h-7 w-7 text-white" /> : <Pin className="h-7 w-7 text-white" />}
+                  <div className="mt-6 font-heading italic text-white text-4xl tracking-[-1px] leading-none">{s.value}</div>
+                  <div className="text-xs text-white font-body font-light mt-2">{s.label}</div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          <motion.div {...rise(1.4)} className="flex flex-col items-center gap-3 pb-6 px-4">
+            <span className="liquid-glass rounded-full px-3.5 py-1 text-xs font-medium text-white font-body text-center">
+              {h.partnersChip}
+            </span>
+            <div className="flex flex-wrap justify-center items-center gap-x-8 md:gap-x-16 gap-y-2">
+              {h.brands.map((b) => (
+                <span key={b} className="font-heading italic text-white text-xl md:text-3xl tracking-tight">
+                  {b}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    );
+  }
+
+  function Services() {
+    const c = useContent();
+    const s = c.services;
+    return (
+      <section id="services" className="relative min-h-screen bg-plum overflow-hidden">
+        <KenBurns slides={s.slides} className="inset-0 w-full h-full z-0" />
+        <div className="absolute inset-0 z-[1] bg-accent-deep/50 mix-blend-color pointer-events-none" />
+        <div className="absolute inset-0 z-[2] bg-gradient-to-b from-plum/85 via-plum/60 to-plum pointer-events-none" />
+
+        <div className="relative z-10 px-6 md:px-16 lg:px-20 pt-24 pb-16 flex flex-col min-h-screen">
+          <div className="mb-auto">
+            <p className="text-sm font-body text-white/80 mb-6">{s.kicker}</p>
+            <h2 className="font-heading italic text-white text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] leading-[0.9] tracking-[-2px] md:tracking-[-3px]">
+              {s.titleLine1}
+              <br />
+              {s.titleLine2}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+            {s.cards.map((card, i) => {
+              const Icon = window.CardIcons[card.icon] || window.CardIcons.sparkle;
+              return (
+                <motion.article
+                  key={card.title + i}
+                  {...inView(i * 0.12)}
+                  className="liquid-glass rounded-[1.25rem] p-6 min-h-[360px] flex flex-col"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="liquid-glass rounded-[0.75rem] h-11 w-11 flex items-center justify-center shrink-0">
+                      <Icon className="h-6 w-6 text-white" />
+                    </span>
+                    <div className="flex flex-wrap justify-end gap-1.5 max-w-[70%]">
+                      {card.tags.map((t) => (
+                        <span key={t} className="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 font-body whitespace-nowrap">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex-1" />
+
+                  <div className="mt-6">
+                    <h3 className="font-heading italic text-white text-3xl md:text-4xl tracking-[-1px] leading-none">
+                      {card.title}
+                    </h3>
+                    <p className="mt-3 text-sm text-white/90 font-body font-light leading-snug max-w-[36ch]">{card.text}</p>
+                  </div>
+                </motion.article>
+              );
+            })}
+          </div>
+
+          <div className="flex flex-wrap gap-3 mt-10">
+            {s.features.map((f) => (
+              <span key={f} className="liquid-glass rounded-full px-4 py-1.5 text-xs md:text-sm text-white font-body font-light">
+                {f}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function Pricing() {
+    const c = useContent();
+    const p = c.pricing;
+    const [tab, setTab] = React.useState("face");
+    const items = p[tab] || [];
+
+    return (
+      <section id="pricing" className="relative bg-plum overflow-hidden px-6 md:px-16 lg:px-20 py-24">
+        <div className="glow-violet absolute inset-0 pointer-events-none" />
+
+        <div className="relative z-10">
+          <p className="text-sm font-body text-white/80 mb-6">{p.kicker}</p>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+            <h2 className="font-heading italic text-white text-5xl md:text-7xl leading-[0.9] tracking-[-2px]">
+              {p.titleLine1}
+              <br />
+              {p.titleLine2}
+            </h2>
+            <div className="liquid-glass rounded-full p-1.5 flex items-center self-start shrink-0">
+              {[
+                { id: "face", label: p.tabFace },
+                { id: "body", label: p.tabBody },
+              ].map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setTab(t.id)}
+                  className={
+                    "rounded-full px-6 py-2 text-sm font-medium font-body transition-colors " +
+                    (tab === t.id ? "bg-accent text-white" : "text-white/80 hover:text-white")
+                  }
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-12">
+            {items.map((it, i) => (
+              <motion.div
+                key={tab + it.t + i}
+                initial={{ filter: "blur(8px)", opacity: 0, y: 24 }}
+                whileInView={{ filter: "blur(0px)", opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: Math.min(i, 6) * 0.05 }}
+                className="liquid-glass rounded-[1.25rem] p-5 md:p-6 flex flex-col sm:flex-row gap-5"
+              >
+                <div className="flex-1">
+                  <div className="flex items-baseline gap-3 flex-wrap">
+                    <h3 className="font-heading italic text-white text-2xl md:text-[1.7rem] leading-none tracking-[-0.5px]">
+                      {it.t}
+                    </h3>
+                    {it.d ? <span className="text-[11px] text-white/70 font-body whitespace-nowrap">{it.d}</span> : null}
+                  </div>
+                  {it.x ? <p className="mt-2.5 text-sm text-white/85 font-body font-light leading-snug">{it.x}</p> : null}
+                  {it.r ? (
+                    <p className="mt-2 text-sm text-accent-soft font-body font-light leading-snug">
+                      Результат: {it.r.charAt(0).toLowerCase() + it.r.slice(1)}
+                    </p>
+                  ) : null}
+                </div>
+
+                <div className="flex sm:flex-col items-center sm:items-end justify-between gap-3 shrink-0">
+                  <div className="font-heading italic text-white text-3xl leading-none whitespace-nowrap">{it.p}</div>
+                  <a
+                    href="#contacts"
+                    className="liquid-glass rounded-full px-4 py-1.5 text-xs font-medium text-white font-body flex items-center gap-1.5 whitespace-nowrap"
+                  >
+                    Записаться
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </a>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function Gallery() {
+    const c = useContent();
+    const g = c.gallery;
+    return (
+      <section id="gallery" className="relative bg-plum overflow-hidden px-6 md:px-16 lg:px-20 py-24">
+        <p className="text-sm font-body text-white/80 mb-6">{g.kicker}</p>
+        <h2 className="font-heading italic text-white text-5xl md:text-7xl leading-[0.9] tracking-[-2px] max-w-3xl">
+          {g.titleLine1}
+          <br />
+          {g.titleLine2}
+        </h2>
+
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
+          {g.photos.map((src, i) => (
+            <motion.div
+              key={src + i}
+              {...inView((i % 3) * 0.1)}
+              className="liquid-glass rounded-[1.25rem] overflow-hidden aspect-[4/3] group"
+            >
+              <img
+                src={src}
+                alt="Студия Beauty Time"
+                loading="lazy"
+                className="w-full h-full object-cover scale-[1.02] group-hover:scale-110 transition-transform duration-700"
+              />
+              <span className="hi-overlay" />
+            </motion.div>
+          ))}
+        </div>
+
+        {g.quote ? (
+          <div className="liquid-glass rounded-[1.25rem] p-6 md:p-10 mt-10 max-w-4xl">
+            <p className="font-heading italic text-white text-2xl md:text-[2rem] leading-tight">{g.quote}</p>
+            <p className="mt-5 text-sm text-white/70 font-body font-light">{g.quoteAuthor}</p>
+          </div>
+        ) : null}
+      </section>
+    );
+  }
+
+  function Promo() {
+    const c = useContent();
+    const p = c.promo;
+    return (
+      <section className="relative bg-plum px-6 md:px-16 lg:px-20 pb-24">
+        <div className="liquid-glass-strong rounded-[1.5rem] p-8 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <p className="text-sm font-body text-white/80 mb-4">{p.kicker}</p>
+            <h2 className="font-heading italic text-white text-4xl md:text-6xl leading-[0.9] tracking-[-2px]">
+              {p.titleLine1}
+              <br />
+              {p.titleLine2}
+            </h2>
+            <p className="mt-5 text-sm md:text-base text-white/90 font-body font-light leading-snug max-w-[46ch]">{p.text}</p>
+            <div className="flex flex-wrap items-center gap-4 mt-7">
+              <a
+                href={p.certUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="bg-accent text-white rounded-full px-5 py-2.5 text-sm font-medium font-body flex items-center gap-2"
+              >
+                {p.certLabel}
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+              <a
+                href={c.contacts.telegram}
+                target="_blank"
+                rel="noreferrer"
+                className="liquid-glass rounded-full px-5 py-2.5 text-sm font-medium text-white font-body flex items-center gap-2"
+              >
+                <Telegram className="h-4 w-4" />
+                {p.tgLabel}
+              </a>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            {p.cosmetics.map((b) => (
+              <div key={b.name} className="liquid-glass rounded-[1.25rem] p-5 flex flex-col items-center text-center">
+                <div className="w-full aspect-square rounded-[1rem] bg-white/90 flex items-center justify-center overflow-hidden">
+                  <img src={b.image} alt={b.name} loading="lazy" className="h-full w-full object-contain p-3" />
+                </div>
+                <div className="mt-4 font-heading italic text-white text-xl leading-none">{b.name}</div>
+                <div className="mt-1.5 text-xs text-white/70 font-body font-light">{b.note}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function Contacts() {
+    const c = useContent();
+    const k = c.contacts;
+    return (
+      <section id="contacts" className="relative bg-plum overflow-hidden px-6 md:px-16 lg:px-20 pb-20">
+        <div className="glow-violet absolute inset-x-0 bottom-0 h-[600px] pointer-events-none" />
+
+        <div className="relative z-10">
+          <p className="text-sm font-body text-white/80 mb-6">{k.kicker}</p>
+          <h2 className="font-heading italic text-white text-5xl md:text-7xl leading-[0.9] tracking-[-2px]">
+            {k.titleLine1}
+            <br />
+            {k.titleLine2}
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+            {k.studios.map((s, i) => (
+              <motion.div key={s.city + i} {...inView(i * 0.12)} className="liquid-glass rounded-[1.25rem] p-7 flex flex-col">
+                <span className="liquid-glass rounded-[0.75rem] h-11 w-11 flex items-center justify-center">
+                  <Pin className="h-6 w-6 text-white" />
+                </span>
+                <h3 className="font-heading italic text-white text-4xl tracking-[-1px] leading-none mt-6">
+                  Студия {s.city}
+                </h3>
+                <a href={s.map} target="_blank" rel="noreferrer" className="mt-3 text-sm text-white/90 font-body font-light hover:text-white">
+                  {s.address}
+                </a>
+                <a href={s.tel} className="mt-1 text-lg text-white font-body hover:text-accent-soft">
+                  {s.phone}
+                </a>
+                <div className="flex-1" />
+                <a
+                  href={s.booking}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="liquid-glass-strong rounded-full px-5 py-2.5 text-sm font-medium text-white font-body flex items-center justify-center gap-2 mt-7"
+                >
+                  {k.bookLabel}
+                  <ArrowUpRight className="h-4 w-4" />
+                </a>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mt-10">
+            <div className="liquid-glass rounded-[1.25rem] px-6 py-4 flex items-center gap-4">
+              <Clock className="h-6 w-6 text-white shrink-0" />
+              <div className="text-sm text-white font-body font-light leading-snug">
+                {k.hoursLine1}
+                <br />
+                {k.hoursLine2}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <a href={k.telegram} target="_blank" rel="noreferrer" aria-label="Telegram"
+                className="liquid-glass rounded-full h-12 w-12 flex items-center justify-center text-white">
+                <Telegram className="h-5 w-5" />
+              </a>
+              <a href={k.vk} target="_blank" rel="noreferrer" aria-label="ВКонтакте"
+                className="liquid-glass rounded-full h-12 w-12 flex items-center justify-center text-white">
+                <VK className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
+
+          <footer className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-16 pt-8 border-t border-white/10">
+            <div className="flex items-center gap-3">
+              <img src={c.brand.logo} alt="" className="h-9 w-9 rounded-full object-cover" />
+              <span className="font-heading italic text-white text-lg leading-none">{c.brand.name}</span>
+            </div>
+            <div className="flex flex-col sm:items-end gap-1">
+              <p className="text-xs text-white/50 font-body font-light text-center sm:text-right">{k.footer}</p>
+              <a href="#admin" className="text-xs text-white/30 hover:text-white/70 font-body">
+                Панель управления
+              </a>
+            </div>
+          </footer>
+        </div>
+      </section>
+    );
+  }
+
+  function Site() {
+    return (
+      <main className="bg-plum">
+        <Hero />
+        <Services />
+        <Pricing />
+        <Gallery />
+        <Promo />
+        <Contacts />
+      </main>
+    );
+  }
+
+  window.Site = Site;
+  window.useContent = useContent;
+</script>
+
+<script type="text/babel">
+  // ===== Панель управления: /#admin =====
+  const { STORAGE_KEY, SESSION_KEY, hashPassword, clone } = window.Store;
+  const { Lock } = window.Icons;
+
+  function Field({ label, value, onChange, textarea, rows = 3, placeholder }) {
+    return (
+      <label className="block">
+        <span className="adm-label">{label}</span>
+        {textarea ? (
+          <textarea
+            className="adm-input mt-1.5"
+            rows={rows}
+            value={value || ""}
+            placeholder={placeholder}
+            onChange={(e) => onChange(e.target.value)}
+          />
+        ) : (
+          <input
+            className="adm-input mt-1.5"
+            value={value || ""}
+            placeholder={placeholder}
+            onChange={(e) => onChange(e.target.value)}
+          />
+        )}
+      </label>
+    );
+  }
+
+  function StringList({ label, items, onChange, placeholder }) {
+    const set = (i, v) => onChange(items.map((x, j) => (j === i ? v : x)));
+    const remove = (i) => onChange(items.filter((_, j) => j !== i));
+    const add = () => onChange(items.concat(""));
+    const move = (i, dir) => {
+      const next = items.slice();
+      const j = i + dir;
+      if (j < 0 || j >= next.length) return;
+      const tmp = next[i];
+      next[i] = next[j];
+      next[j] = tmp;
+      onChange(next);
+    };
+    return (
+      <div>
+        <span className="adm-label">{label}</span>
+        <div className="mt-1.5 space-y-2">
+          {items.map((it, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <input className="adm-input" value={it} placeholder={placeholder} onChange={(e) => set(i, e.target.value)} />
+              <button className="adm-btn adm-btn-icon" onClick={() => move(i, -1)} title="Выше">↑</button>
+              <button className="adm-btn adm-btn-icon" onClick={() => move(i, 1)} title="Ниже">↓</button>
+              <button className="adm-btn adm-btn-icon adm-btn-danger" onClick={() => remove(i)} title="Удалить">✕</button>
+            </div>
+          ))}
+        </div>
+        <button className="adm-btn mt-2" onClick={add}>+ Добавить</button>
+      </div>
+    );
+  }
+
+  function ImageList({ label, items, onChange, hint }) {
+    const set = (i, v) => onChange(items.map((x, j) => (j === i ? v : x)));
+    const remove = (i) => onChange(items.filter((_, j) => j !== i));
+    const upload = (i, file) => {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => set(i, String(reader.result));
+      reader.readAsDataURL(file);
+    };
+    return (
+      <div>
+        <span className="adm-label">{label}</span>
+        {hint ? <p className="text-xs text-white/40 font-body mt-1">{hint}</p> : null}
+        <div className="mt-2 space-y-2">
+          {items.map((src, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <img src={src} alt="" className="h-11 w-16 object-cover rounded-lg bg-white/5 shrink-0" />
+              <input className="adm-input" value={src.startsWith("data:") ? "(загруженный файл)" : src}
+                readOnly={src.startsWith("data:")} onChange={(e) => set(i, e.target.value)} />
+              <label className="adm-btn adm-btn-icon cursor-pointer">
+                Файл
+                <input type="file" accept="image/*" className="hidden" onChange={(e) => upload(i, e.target.files[0])} />
+              </label>
+              <button className="adm-btn adm-btn-icon adm-btn-danger" onClick={() => remove(i)} title="Удалить">✕</button>
+            </div>
+          ))}
+        </div>
+        <button className="adm-btn mt-2" onClick={() => onChange(items.concat("assets/"))}>+ Добавить фото</button>
+      </div>
+    );
+  }
+
+  function PriceEditor({ items, onChange }) {
+    const set = (i, key, v) => onChange(items.map((x, j) => (j === i ? Object.assign({}, x, { [key]: v }) : x)));
+    const remove = (i) => onChange(items.filter((_, j) => j !== i));
+    const move = (i, dir) => {
+      const next = items.slice();
+      const j = i + dir;
+      if (j < 0 || j >= next.length) return;
+      const tmp = next[i];
+      next[i] = next[j];
+      next[j] = tmp;
+      onChange(next);
+    };
+    const add = () => onChange(items.concat({ t: "Новая программа", d: "", p: "0 ₽", x: "", r: "" }));
+
+    return (
+      <div className="space-y-4">
+        {items.map((it, i) => (
+          <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <div className="flex items-center justify-between gap-2 mb-3">
+              <span className="text-xs text-white/40 font-body">№ {i + 1}</span>
+              <div className="flex items-center gap-2">
+                <button className="adm-btn adm-btn-icon" onClick={() => move(i, -1)}>↑</button>
+                <button className="adm-btn adm-btn-icon" onClick={() => move(i, 1)}>↓</button>
+                <button className="adm-btn adm-btn-icon adm-btn-danger" onClick={() => remove(i)}>Удалить</button>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
+              <div className="md:col-span-6">
+                <Field label="Название" value={it.t} onChange={(v) => set(i, "t", v)} />
+              </div>
+              <div className="md:col-span-3">
+                <Field label="Длительность" value={it.d} onChange={(v) => set(i, "d", v)} placeholder="60 мин" />
+              </div>
+              <div className="md:col-span-3">
+                <Field label="Цена" value={it.p} onChange={(v) => set(i, "p", v)} placeholder="4 000 ₽" />
+              </div>
+              <div className="md:col-span-12">
+                <Field label="Описание" value={it.x} onChange={(v) => set(i, "x", v)} textarea rows={2} />
+              </div>
+              <div className="md:col-span-12">
+                <Field label="Результат (необязательно)" value={it.r} onChange={(v) => set(i, "r", v)} textarea rows={2} />
+              </div>
+            </div>
+          </div>
+        ))}
+        <button className="adm-btn adm-btn-primary" onClick={add}>+ Добавить программу</button>
+      </div>
+    );
+  }
+
+  function Login({ content, onOk }) {
+    const [user, setUser] = React.useState("");
+    const [pass, setPass] = React.useState("");
+    const [error, setError] = React.useState("");
+
+    const submit = (e) => {
+      e.preventDefault();
+      const ok = user.trim() === content.auth.user && hashPassword(pass) === content.auth.hash;
+      if (ok) {
+        sessionStorage.setItem(SESSION_KEY, "1");
+        onOk();
+      } else {
+        setError("Неверный логин или пароль");
+      }
+    };
+
+    return (
+      <div className="min-h-screen bg-plum flex items-center justify-center px-4">
+        <form onSubmit={submit} className="liquid-glass rounded-[1.5rem] p-8 w-full max-w-sm">
+          <span className="liquid-glass rounded-[0.75rem] h-11 w-11 flex items-center justify-center">
+            <Lock className="h-6 w-6 text-white" />
+          </span>
+          <h1 className="font-heading italic text-white text-3xl mt-5 leading-none">Панель управления</h1>
+          <p className="text-xs text-white/50 font-body mt-2">{content.brand.name}</p>
+
+          <div className="mt-6 space-y-3">
+            <Field label="Логин" value={user} onChange={setUser} />
+            <label className="block">
+              <span className="adm-label">Пароль</span>
+              <input type="password" className="adm-input mt-1.5" value={pass} onChange={(e) => setPass(e.target.value)} />
+            </label>
+          </div>
+
+          {error ? <p className="text-sm text-red-300 font-body mt-3">{error}</p> : null}
+
+          <button type="submit" className="adm-btn adm-btn-primary w-full mt-5">Войти</button>
+          <a href="#home" className="block text-center text-xs text-white/40 hover:text-white/70 font-body mt-4">
+            ← Вернуться на сайт
+          </a>
+        </form>
+      </div>
+    );
+  }
+
+  const TABS = [
+    { id: "hero", label: "Главная" },
+    { id: "services", label: "Услуги" },
+    { id: "pricing", label: "Прайс" },
+    { id: "gallery", label: "Атмосфера" },
+    { id: "promo", label: "Сертификат" },
+    { id: "contacts", label: "Контакты" },
+    { id: "access", label: "Доступ" },
+  ];
+
+  function Admin({ content, published, hasLocal, onApply, onDropLocal }) {
+    const [authed, setAuthed] = React.useState(sessionStorage.getItem(SESSION_KEY) === "1");
+    const [draft, setDraft] = React.useState(() => clone(content));
+    const [tab, setTab] = React.useState("hero");
+    const [dirty, setDirty] = React.useState(false);
+    const [toast, setToast] = React.useState("");
+    const [priceTab, setPriceTab] = React.useState("face");
+
+    const say = (msg) => {
+      setToast(msg);
+      window.setTimeout(() => setToast(""), 2600);
+    };
+
+    const upd = (path, value) => {
+      setDraft((prev) => {
+        const next = clone(prev);
+        let node = next;
+        for (let i = 0; i < path.length - 1; i++) node = node[path[i]];
+        node[path[path.length - 1]] = value;
+        return next;
+      });
+      setDirty(true);
+    };
+
+    const save = () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+      onApply(draft);
+      setDirty(false);
+      say("Сохранено в этом браузере. Чтобы увидели все — выгрузите content.json.");
+    };
+
+    const download = () => {
+      const blob = new Blob([JSON.stringify(draft, null, 2)], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "content.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      say("Файл скачан. Положите его рядом с index.html.");
+    };
+
+    const resetToPublished = () => {
+      if (!window.confirm("Сбросить локальные правки и вернуться к опубликованной версии?")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      setDraft(clone(published));
+      onDropLocal();
+      setDirty(false);
+      say("Локальные правки сброшены.");
+    };
+
+    if (!authed) return <Login content={content} onOk={() => setAuthed(true)} />;
+
+    const h = draft.hero;
+    const s = draft.services;
+    const p = draft.pricing;
+    const g = draft.gallery;
+    const pr = draft.promo;
+    const k = draft.contacts;
+
+    return (
+      <div className="min-h-screen bg-plum text-white font-body">
+        <header className="sticky top-0 z-40 bg-plum/95 backdrop-blur border-b border-white/10 px-4 md:px-8 py-3">
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-3">
+              <img src={draft.brand.logo} alt="" className="h-9 w-9 rounded-full object-cover" />
+              <div>
+                <div className="font-heading italic text-lg leading-none">Панель управления</div>
+                <div className="text-[11px] text-white/45">{draft.brand.name}</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              {dirty ? <span className="text-xs text-amber-300">Есть несохранённые правки</span> : null}
+              <a href="#home" className="adm-btn">Открыть сайт</a>
+              <button className="adm-btn" onClick={download}>Скачать content.json</button>
+              <button className="adm-btn adm-btn-primary" onClick={save}>Сохранить</button>
+              <button
+                className="adm-btn"
+                onClick={() => {
+                  sessionStorage.removeItem(SESSION_KEY);
+                  setAuthed(false);
+                }}
+              >
+                Выйти
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <div className="px-4 md:px-8 py-6 max-w-6xl mx-auto">
+          {hasLocal ? (
+            <div className="rounded-2xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 mb-6 flex items-center justify-between gap-4 flex-wrap">
+              <p className="text-sm text-amber-100">
+                Сайт показывает локальные правки из этого браузера. Посетители увидят их только после выгрузки
+                content.json на хостинг.
+              </p>
+              <button className="adm-btn" onClick={resetToPublished}>Сбросить локальные правки</button>
+            </div>
+          ) : null}
+
+          <nav className="flex flex-wrap gap-2 mb-6">
+            {TABS.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className={"adm-btn " + (tab === t.id ? "adm-btn-primary" : "")}
+              >
+                {t.label}
+              </button>
+            ))}
+          </nav>
+
+          {tab === "hero" ? (
+            <div className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Field label="Название салона" value={draft.brand.name} onChange={(v) => upd(["brand", "name"], v)} />
+                <Field label="Логотип (путь к файлу)" value={draft.brand.logo} onChange={(v) => upd(["brand", "logo"], v)} />
+                <Field label="Плашка со скидкой" value={h.badgeChip} onChange={(v) => upd(["hero", "badgeChip"], v)} />
+                <Field label="Текст плашки" value={h.badgeText} onChange={(v) => upd(["hero", "badgeText"], v)} />
+              </div>
+              <Field label="Заголовок" value={h.title} onChange={(v) => upd(["hero", "title"], v)} textarea rows={2} />
+              <Field label="Подзаголовок" value={h.subtitle} onChange={(v) => upd(["hero", "subtitle"], v)} textarea rows={3} />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Field label="Кнопка (основная)" value={h.ctaPrimary} onChange={(v) => upd(["hero", "ctaPrimary"], v)} />
+                <Field label="Кнопка (вторая)" value={h.ctaSecondary} onChange={(v) => upd(["hero", "ctaSecondary"], v)} />
+                <Field label="Кнопка в шапке" value={draft.navCta} onChange={(v) => upd(["navCta"], v)} />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {h.stats.map((st, i) => (
+                  <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 space-y-3">
+                    <div className="text-xs text-white/40">Показатель {i + 1}</div>
+                    <Field label="Значение" value={st.value}
+                      onChange={(v) => upd(["hero", "stats"], h.stats.map((x, j) => (j === i ? Object.assign({}, x, { value: v }) : x)))} />
+                    <Field label="Подпись" value={st.label}
+                      onChange={(v) => upd(["hero", "stats"], h.stats.map((x, j) => (j === i ? Object.assign({}, x, { label: v }) : x)))} />
+                  </div>
+                ))}
+              </div>
+
+              <Field label="Подпись над брендами" value={h.partnersChip} onChange={(v) => upd(["hero", "partnersChip"], v)} />
+              <StringList label="Бренды косметики" items={h.brands} onChange={(v) => upd(["hero", "brands"], v)} />
+              <StringList label="Пункты меню (подпись)" items={draft.nav.map((n) => n.label)}
+                onChange={(v) => upd(["nav"], v.map((label, i) => Object.assign({}, draft.nav[i] || { href: "#home" }, { label })))} />
+              <ImageList label="Фон первого экрана" items={h.slides} onChange={(v) => upd(["hero", "slides"], v)}
+                hint="Путь к файлу в папке assets или загруженный файл. Кадры сменяют друг друга плавным переходом." />
+            </div>
+          ) : null}
+
+          {tab === "services" ? (
+            <div className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Field label="Надпись сверху" value={s.kicker} onChange={(v) => upd(["services", "kicker"], v)} />
+                <Field label="Заголовок, строка 1" value={s.titleLine1} onChange={(v) => upd(["services", "titleLine1"], v)} />
+                <Field label="Заголовок, строка 2" value={s.titleLine2} onChange={(v) => upd(["services", "titleLine2"], v)} />
+              </div>
+
+              {s.cards.map((card, i) => (
+                <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 space-y-3">
+                  <div className="text-xs text-white/40">Карточка {i + 1}</div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="md:col-span-2">
+                      <Field label="Заголовок" value={card.title}
+                        onChange={(v) => upd(["services", "cards"], s.cards.map((x, j) => (j === i ? Object.assign({}, x, { title: v }) : x)))} />
+                    </div>
+                    <label className="block">
+                      <span className="adm-label">Иконка</span>
+                      <select className="adm-input mt-1.5" value={card.icon}
+                        onChange={(e) => upd(["services", "cards"], s.cards.map((x, j) => (j === i ? Object.assign({}, x, { icon: e.target.value }) : x)))}>
+                        <option value="drop">Капля</option>
+                        <option value="leaf">Лист</option>
+                        <option value="sparkle">Искра</option>
+                        <option value="pin">Геометка</option>
+                        <option value="clock">Часы</option>
+                      </select>
+                    </label>
+                  </div>
+                  <Field label="Описание" value={card.text} textarea rows={3}
+                    onChange={(v) => upd(["services", "cards"], s.cards.map((x, j) => (j === i ? Object.assign({}, x, { text: v }) : x)))} />
+                  <StringList label="Теги" items={card.tags}
+                    onChange={(v) => upd(["services", "cards"], s.cards.map((x, j) => (j === i ? Object.assign({}, x, { tags: v }) : x)))} />
+                </div>
+              ))}
+
+              <StringList label="Плашки «почему выбирают нас»" items={s.features} onChange={(v) => upd(["services", "features"], v)} />
+              <ImageList label="Фон секции услуг" items={s.slides} onChange={(v) => upd(["services", "slides"], v)} />
+            </div>
+          ) : null}
+
+          {tab === "pricing" ? (
+            <div className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Field label="Надпись сверху" value={p.kicker} onChange={(v) => upd(["pricing", "kicker"], v)} />
+                <Field label="Заголовок, строка 1" value={p.titleLine1} onChange={(v) => upd(["pricing", "titleLine1"], v)} />
+                <Field label="Заголовок, строка 2" value={p.titleLine2} onChange={(v) => upd(["pricing", "titleLine2"], v)} />
+                <Field label="Название вкладки 1" value={p.tabFace} onChange={(v) => upd(["pricing", "tabFace"], v)} />
+                <Field label="Название вкладки 2" value={p.tabBody} onChange={(v) => upd(["pricing", "tabBody"], v)} />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button className={"adm-btn " + (priceTab === "face" ? "adm-btn-primary" : "")} onClick={() => setPriceTab("face")}>
+                  {p.tabFace} ({p.face.length})
+                </button>
+                <button className={"adm-btn " + (priceTab === "body" ? "adm-btn-primary" : "")} onClick={() => setPriceTab("body")}>
+                  {p.tabBody} ({p.body.length})
+                </button>
+              </div>
+
+              <PriceEditor items={p[priceTab]} onChange={(v) => upd(["pricing", priceTab], v)} />
+            </div>
+          ) : null}
+
+          {tab === "gallery" ? (
+            <div className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Field label="Надпись сверху" value={g.kicker} onChange={(v) => upd(["gallery", "kicker"], v)} />
+                <Field label="Заголовок, строка 1" value={g.titleLine1} onChange={(v) => upd(["gallery", "titleLine1"], v)} />
+                <Field label="Заголовок, строка 2" value={g.titleLine2} onChange={(v) => upd(["gallery", "titleLine2"], v)} />
+              </div>
+              <ImageList label="Фотографии студии" items={g.photos} onChange={(v) => upd(["gallery", "photos"], v)} />
+              <Field label="Отзыв" value={g.quote} onChange={(v) => upd(["gallery", "quote"], v)} textarea rows={4} />
+              <Field label="Автор отзыва" value={g.quoteAuthor} onChange={(v) => upd(["gallery", "quoteAuthor"], v)} />
+            </div>
+          ) : null}
+
+          {tab === "promo" ? (
+            <div className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Field label="Надпись сверху" value={pr.kicker} onChange={(v) => upd(["promo", "kicker"], v)} />
+                <Field label="Заголовок, строка 1" value={pr.titleLine1} onChange={(v) => upd(["promo", "titleLine1"], v)} />
+                <Field label="Заголовок, строка 2" value={pr.titleLine2} onChange={(v) => upd(["promo", "titleLine2"], v)} />
+              </div>
+              <Field label="Текст" value={pr.text} onChange={(v) => upd(["promo", "text"], v)} textarea rows={3} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Field label="Кнопка сертификата" value={pr.certLabel} onChange={(v) => upd(["promo", "certLabel"], v)} />
+                <Field label="Ссылка на сертификат" value={pr.certUrl} onChange={(v) => upd(["promo", "certUrl"], v)} />
+                <Field label="Кнопка Telegram" value={pr.tgLabel} onChange={(v) => upd(["promo", "tgLabel"], v)} />
+              </div>
+              {pr.cosmetics.map((b, i) => (
+                <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <Field label="Бренд" value={b.name}
+                    onChange={(v) => upd(["promo", "cosmetics"], pr.cosmetics.map((x, j) => (j === i ? Object.assign({}, x, { name: v }) : x)))} />
+                  <Field label="Подпись" value={b.note}
+                    onChange={(v) => upd(["promo", "cosmetics"], pr.cosmetics.map((x, j) => (j === i ? Object.assign({}, x, { note: v }) : x)))} />
+                  <Field label="Изображение" value={b.image.startsWith("data:") ? "(загруженный файл)" : b.image}
+                    onChange={(v) => upd(["promo", "cosmetics"], pr.cosmetics.map((x, j) => (j === i ? Object.assign({}, x, { image: v }) : x)))} />
+                </div>
+              ))}
+            </div>
+          ) : null}
+
+          {tab === "contacts" ? (
+            <div className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Field label="Надпись сверху" value={k.kicker} onChange={(v) => upd(["contacts", "kicker"], v)} />
+                <Field label="Заголовок, строка 1" value={k.titleLine1} onChange={(v) => upd(["contacts", "titleLine1"], v)} />
+                <Field label="Заголовок, строка 2" value={k.titleLine2} onChange={(v) => upd(["contacts", "titleLine2"], v)} />
+              </div>
+
+              {k.studios.map((st, i) => (
+                <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="text-xs text-white/40">Студия {i + 1}</div>
+                    <button className="adm-btn adm-btn-icon adm-btn-danger"
+                      onClick={() => upd(["contacts", "studios"], k.studios.filter((_, j) => j !== i))}>
+                      Удалить
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {[
+                      ["city", "Город"],
+                      ["address", "Адрес"],
+                      ["phone", "Телефон (как показывать)"],
+                      ["tel", "Телефон-ссылка (tel:+7…)"],
+                      ["booking", "Ссылка записи"],
+                      ["map", "Ссылка на карту"],
+                    ].map(([key, label]) => (
+                      <Field key={key} label={label} value={st[key]}
+                        onChange={(v) => upd(["contacts", "studios"], k.studios.map((x, j) => (j === i ? Object.assign({}, x, { [key]: v }) : x)))} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+              <button className="adm-btn"
+                onClick={() => upd(["contacts", "studios"], k.studios.concat({ city: "", address: "", phone: "", tel: "tel:+7", booking: "", map: "" }))}>
+                + Добавить студию
+              </button>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Field label="Часы, строка 1" value={k.hoursLine1} onChange={(v) => upd(["contacts", "hoursLine1"], v)} />
+                <Field label="Часы, строка 2" value={k.hoursLine2} onChange={(v) => upd(["contacts", "hoursLine2"], v)} />
+                <Field label="Telegram" value={k.telegram} onChange={(v) => upd(["contacts", "telegram"], v)} />
+                <Field label="ВКонтакте" value={k.vk} onChange={(v) => upd(["contacts", "vk"], v)} />
+                <Field label="Кнопка записи" value={k.bookLabel} onChange={(v) => upd(["contacts", "bookLabel"], v)} />
+              </div>
+              <Field label="Строка в подвале" value={k.footer} onChange={(v) => upd(["contacts", "footer"], v)} textarea rows={2} />
+            </div>
+          ) : null}
+
+          {tab === "access" ? <AccessTab draft={draft} upd={upd} say={say} /> : null}
+        </div>
+
+        {toast ? (
+          <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 rounded-2xl bg-accent px-5 py-3 text-sm text-white shadow-lg max-w-[90vw] text-center">
+            {toast}
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
+  function AccessTab({ draft, upd, say }) {
+    const [p1, setP1] = React.useState("");
+    const [p2, setP2] = React.useState("");
+
+    const change = () => {
+      if (p1.length < 6) return say("Пароль должен быть не короче 6 символов.");
+      if (p1 !== p2) return say("Пароли не совпадают.");
+      upd(["auth", "hash"], hashPassword(p1));
+      setP1("");
+      setP2("");
+      say("Пароль изменён. Нажмите «Сохранить», затем выгрузите content.json.");
+    };
+
+    return (
+      <div className="space-y-5 max-w-2xl">
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 space-y-3">
+          <Field label="Логин" value={draft.auth.user} onChange={(v) => upd(["auth", "user"], v)} />
+          <label className="block">
+            <span className="adm-label">Новый пароль</span>
+            <input type="password" className="adm-input mt-1.5" value={p1} onChange={(e) => setP1(e.target.value)} />
+          </label>
+          <label className="block">
+            <span className="adm-label">Повторите пароль</span>
+            <input type="password" className="adm-input mt-1.5" value={p2} onChange={(e) => setP2(e.target.value)} />
+          </label>
+          <button className="adm-btn adm-btn-primary" onClick={change}>Изменить пароль</button>
+        </div>
+
+        <div className="rounded-2xl border border-amber-400/30 bg-amber-400/10 p-4 text-sm text-amber-100 leading-relaxed">
+          <strong>Насколько это защищено.</strong> Сайт работает без сервера, поэтому проверка пароля происходит
+          в браузере, а его хэш лежит в файле сайта. Это закрывает страницу от случайного посетителя, но не от того,
+          кто откроет исходный код и станет подбирать пароль. Не используйте здесь пароль, который применяете
+          где-то ещё. Если понадобится настоящая защита — нужен сервер, который будет проверять пароль и хранить
+          content.json у себя.
+        </div>
+
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-white/70 leading-relaxed">
+          <strong className="text-white">Как правки попадают на сайт.</strong>
+          <ol className="list-decimal ml-5 mt-2 space-y-1">
+            <li>Меняете тексты и цены во вкладках выше.</li>
+            <li>«Сохранить» — правки применяются к сайту в этом браузере.</li>
+            <li>«Скачать content.json» — файл кладёте рядом с index.html на хостинге.</li>
+            <li>Сайт при загрузке сам подхватит content.json, и правки увидят все посетители.</li>
+          </ol>
+        </div>
+      </div>
+    );
+  }
+
+  window.Admin = Admin;
+</script>
+
+<script type="text/babel">
+  const { ContentCtx, Site, Admin } = window;
+  const { loadContent, STORAGE_KEY } = window.Store;
+
+  function Root() {
+    const [state, setState] = React.useState(null);
+    const [route, setRoute] = React.useState(window.location.hash);
+
+    React.useEffect(() => {
+      loadContent().then(setState);
+      const onHash = () => setRoute(window.location.hash);
+      window.addEventListener("hashchange", onHash);
+
+      // Мобильные: подсветка плашки по касанию (CSS :hover там не работает).
+      let picked = null;
+      const onDown = (e) => {
+        if (e.pointerType !== "touch" && e.pointerType !== "pen") return;
+        const plate = e.target.closest ? e.target.closest(".liquid-glass, .liquid-glass-strong") : null;
+        if (picked && picked !== plate) picked.classList.remove("is-active");
+        if (plate) {
+          plate.classList.add("is-active");
+          picked = plate;
+        } else {
+          picked = null;
+        }
+      };
+      window.addEventListener("pointerdown", onDown, { passive: true });
+
+      return () => {
+        window.removeEventListener("hashchange", onHash);
+        window.removeEventListener("pointerdown", onDown);
+        if (picked) picked.classList.remove("is-active");
+      };
+    }, []);
+
+    if (!state) return <div className="min-h-screen bg-plum" />;
+
+    if (route === "#admin") {
+      return (
+        <Admin
+          content={state.content}
+          published={state.published}
+          hasLocal={state.hasLocal}
+          onApply={(next) => setState((s) => Object.assign({}, s, { content: next, hasLocal: true }))}
+          onDropLocal={() => setState((s) => Object.assign({}, s, { content: s.published, hasLocal: false }))}
+        />
+      );
+    }
+
+    return (
+      <ContentCtx.Provider value={state.content}>
+        <Site />
+      </ContentCtx.Provider>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById("root")).render(<Root />);
+</script>
