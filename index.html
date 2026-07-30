@@ -110,6 +110,24 @@
     pointer-events: none;
   }
 
+  /* Шапка: при прокрутке вниз уходит в размытие, при прокрутке вверх возвращается. */
+  .nav-bar {
+    filter: blur(0px);
+    opacity: 1;
+    transform: translateY(0);
+    transition: filter 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
+  }
+  .nav-bar.nav-hidden {
+    filter: blur(12px);
+    opacity: 0;
+    transform: translateY(-14px);
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-bar { transition: opacity 0.2s linear; }
+    .nav-bar.nav-hidden { filter: none; transform: none; }
+  }
+
   /* Подсветка стеклянных плашек: наведение курсора и касание на мобильных.
      .is-active вешает JS по касанию — на телефоне подсветка держится до касания другой плашки. */
   .liquid-glass,
@@ -901,8 +919,36 @@
 
   function Navbar() {
     const c = useContent();
+    const [hidden, setHidden] = React.useState(false);
+
+    React.useEffect(() => {
+      let last = window.scrollY;
+      let ticking = false;
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(() => {
+          const y = window.scrollY;
+          const delta = y - last;
+          // У самого верха шапка всегда на месте; ниже — реагируем на направление.
+          if (y < 90) setHidden(false);
+          else if (delta > 6) setHidden(true);
+          else if (delta < -6) setHidden(false);
+          last = y;
+          ticking = false;
+        });
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+
     return (
-      <header className="fixed top-4 left-0 right-0 z-50 px-4 md:px-8 lg:px-16">
+      <header
+        className={
+          "nav-bar fixed top-4 left-0 right-0 z-50 px-4 md:px-8 lg:px-16" + (hidden ? " nav-hidden" : "")
+        }
+        aria-hidden={hidden}
+      >
         <div className="flex items-center justify-between gap-4">
           <a href="#home" className="flex items-center gap-3 shrink-0">
             <span className="liquid-glass rounded-full h-12 w-12 flex items-center justify-center shrink-0">
