@@ -45,6 +45,8 @@
 
 <style>
   html { scroll-behavior: smooth; }
+  /* Чтобы фиксированный навбар не накрывал заголовок секции при переходе по меню. */
+  section[id] { scroll-margin-top: 84px; }
   body { background: #000; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
 
   .liquid-glass {
@@ -948,8 +950,6 @@
         <div className="absolute inset-0 z-[2] bg-gradient-to-b from-plum/70 via-plum/25 to-plum pointer-events-none" />
 
         <div className="relative z-10 flex flex-col min-h-screen">
-          <Navbar />
-
           <div className="flex-1 flex flex-col items-center justify-center text-center pt-28 md:pt-24 px-4">
             <motion.a
               href={c.contacts.telegram}
@@ -1341,7 +1341,10 @@
 
   function Site() {
     return (
+      // Навбар — вне секций: иначе его fixed z-50 замкнётся в контексте наложения hero
+      // и содержимое следующих секций будет закрывать кнопку записи.
       <main className="bg-plum">
+        <Navbar />
         <Hero />
         <Services />
         <Pricing />
