@@ -128,6 +128,37 @@
     .nav-bar.nav-hidden { filter: none; transform: none; }
   }
 
+  /* Плашка с полосками — в том же оттенке, что даёт наведение на стеклянные плашки. */
+  .liquid-glass.menu-plate {
+    background-color: rgba(168, 85, 247, 0.18);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18), 0 0 20px rgba(168, 85, 247, 0.28);
+  }
+  .liquid-glass.menu-plate:hover,
+  .liquid-glass.menu-plate.is-active {
+    background-color: rgba(168, 85, 247, 0.34);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3), 0 0 32px rgba(168, 85, 247, 0.55);
+  }
+
+  /* Панель разделов: плотный фиолетовый градиент со свечением — как фон главной,
+     только на тон светлее. */
+  .menu-panel {
+    background-color: #2a0a45;
+    background-image:
+      radial-gradient(120% 85% at 88% -15%, rgba(216, 180, 254, 0.5) 0%, rgba(168, 85, 247, 0) 62%),
+      radial-gradient(95% 75% at -10% 115%, rgba(124, 58, 237, 0.75) 0%, rgba(109, 40, 217, 0) 68%),
+      linear-gradient(158deg, #3b0a5f 0%, #4c1d95 52%, #6d28d9 100%);
+    border: 1px solid rgba(237, 222, 255, 0.22);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 44px rgba(168, 85, 247, 0.38),
+      inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  }
+  .menu-panel a:not(.menu-cta):hover { background-color: rgba(255, 255, 255, 0.18); }
+
+  .menu-cta {
+    background-image: linear-gradient(100deg, #a855f7 0%, #c084fc 55%, #d8b4fe 100%);
+    box-shadow: 0 0 22px rgba(192, 132, 252, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  }
+  .menu-cta:hover { background-image: linear-gradient(100deg, #c084fc 0%, #d8b4fe 55%, #ede9fe 100%); }
+
   /* Подсветка стеклянных плашек: наведение курсора и касание на мобильных.
      .is-active вешает JS по касанию — на телефоне подсветка держится до касания другой плашки. */
   .liquid-glass,
@@ -158,6 +189,10 @@
         0 0 32px rgba(168, 85, 247, 0.25);
     }
   }
+
+  /* Лента отзывов: прокрутка есть, полосы прокрутки не видно. */
+  .no-bar { scrollbar-width: none; -ms-overflow-style: none; }
+  .no-bar::-webkit-scrollbar { display: none; }
 
   /* Плашки, закрытые фотографией: цвет даёт накладка, а не фон. */
   .hi-overlay {
@@ -497,9 +532,14 @@
         "assets/kb-04.jpg",
         "assets/kb-10.png",
       ],
-      quote:
-        "«Была в этом салоне на общем массаже по подарочному сертификату! Всё на высшем уровне. Атмосфера очень приятная, чисто, уютно, безумно вежливый и приветливый персонал. Рекомендую это место и рада, что открыла его для себя!»",
-      quoteAuthor: "Наталья Журавлева · отзыв на Яндекс.Картах",
+      reviewsTitle: "Что говорят гости",
+      reviews: [
+        {
+          text: "Была в этом салоне на общем массаже по подарочному сертификату! Всё на высшем уровне. Атмосфера очень приятная, чисто, уютно, безумно вежливый и приветливый персонал. Рекомендую это место и рада, что открыла его для себя!",
+          author: "Наталья Журавлева",
+          source: "отзыв на Яндекс.Картах",
+        },
+      ],
     },
 
     promo: {
@@ -864,22 +904,16 @@
     const menuRef = React.useRef(null);
 
     React.useEffect(() => {
-      let last = window.scrollY;
       let ticking = false;
       const onScroll = () => {
         if (ticking) return;
         ticking = true;
         window.requestAnimationFrame(() => {
-          const y = window.scrollY;
-          const delta = y - last;
-          // Шапка видна только у самого верха: чуть прокрутили вниз — уходит,
-          // на первом экране записаться можно большой кнопкой по центру.
-          if (y < 10) setHidden(false);
-          else if (delta > 4) {
-            setHidden(true);
-            setOpen(false);
-          } else if (delta < -4) setHidden(false);
-          last = y;
+          // Шапка видна только когда страница прокручена в самый верх.
+          // При любой прокрутке уходит и обратно при движении вверх не появляется.
+          const atTop = window.scrollY < 10;
+          setHidden(!atTop);
+          if (!atTop) setOpen(false);
           ticking = false;
         });
       };
@@ -923,7 +957,7 @@
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-label={open ? "Закрыть меню" : "Открыть меню"}
-              className="liquid-glass rounded-full h-12 w-12 flex items-center justify-center"
+              className="liquid-glass menu-plate rounded-full h-12 w-12 flex items-center justify-center"
             >
               <Burger className="h-5 w-5 text-white" open={open} />
             </button>
@@ -935,14 +969,14 @@
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   exit={{ opacity: 0, y: -10, filter: "blur(8px)" }}
                   transition={{ duration: 0.25, ease: "easeOut" }}
-                  className="absolute right-0 top-[3.75rem] w-60 rounded-[1.25rem] p-2 flex flex-col gap-1 bg-accent-deep border border-white/15 shadow-2xl shadow-black/50"
+                  className="menu-panel absolute right-0 top-[3.75rem] w-60 rounded-[1.25rem] p-2 flex flex-col gap-1"
                 >
                   {c.nav.map((l) => (
                     <a
                       key={l.href}
                       href={l.href}
                       onClick={() => setOpen(false)}
-                      className="rounded-full px-4 py-2.5 text-sm font-medium text-white font-body hover:bg-white/20 transition-colors"
+                      className="rounded-full px-4 py-2.5 text-sm font-medium text-white font-body transition-colors"
                     >
                       {l.label}
                     </a>
@@ -950,7 +984,7 @@
                   <a
                     href="#contacts"
                     onClick={() => setOpen(false)}
-                    className="bg-accent hover:bg-accent-soft hover:text-accent-deep transition-colors rounded-full px-4 py-2.5 mt-1 text-sm font-medium text-white font-body flex items-center justify-between gap-2"
+                    className="menu-cta transition-all rounded-full px-4 py-2.5 mt-1 text-sm font-medium text-white font-body flex items-center justify-between gap-2"
                   >
                     {c.navCta}
                     <ArrowUpRight className="h-4 w-4" />
@@ -1184,6 +1218,131 @@
     );
   }
 
+  function Chevron({ className = "h-5 w-5", left }) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+        strokeLinecap="round" strokeLinejoin="round">
+        <path d={left ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"} />
+      </svg>
+    );
+  }
+
+  // Лента отзывов: горизонтальная прокрутка с прилипанием, стрелки, точки
+  // и автолистание, которое замирает, пока читают.
+  function Reviews({ title, items }) {
+    const trackRef = React.useRef(null);
+    const [index, setIndex] = React.useState(0);
+    const [paused, setPaused] = React.useState(false);
+    const many = items.length > 1;
+
+    const goTo = React.useCallback((i) => {
+      const track = trackRef.current;
+      if (!track || !track.children[i]) return;
+      track.scrollTo({ left: track.children[i].offsetLeft - track.offsetLeft, behavior: "smooth" });
+    }, []);
+
+    React.useEffect(() => {
+      const track = trackRef.current;
+      if (!track) return;
+      const onScroll = () => {
+        let best = 0;
+        let bestDist = Infinity;
+        Array.prototype.forEach.call(track.children, (card, i) => {
+          const d = Math.abs(card.offsetLeft - track.offsetLeft - track.scrollLeft);
+          if (d < bestDist) {
+            bestDist = d;
+            best = i;
+          }
+        });
+        setIndex(best);
+      };
+      track.addEventListener("scroll", onScroll, { passive: true });
+      return () => track.removeEventListener("scroll", onScroll);
+    }, [items.length]);
+
+    React.useEffect(() => {
+      if (!many || paused) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const timer = setInterval(() => {
+        setIndex((cur) => {
+          const next = (cur + 1) % items.length;
+          goTo(next);
+          return next;
+        });
+      }, 7000);
+      return () => clearInterval(timer);
+    }, [many, paused, items.length, goTo]);
+
+    if (!items.length) return null;
+
+    return (
+      <div
+        className="mt-16"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused(true)}
+      >
+        <div className="flex items-end justify-between gap-4 mb-6">
+          <h3 className="font-heading italic text-white text-3xl md:text-4xl leading-none tracking-[-1px]">{title}</h3>
+          {many ? (
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                aria-label="Предыдущий отзыв"
+                onClick={() => goTo((index - 1 + items.length) % items.length)}
+                className="liquid-glass rounded-full h-10 w-10 flex items-center justify-center text-white"
+              >
+                <Chevron className="h-5 w-5" left />
+              </button>
+              <button
+                type="button"
+                aria-label="Следующий отзыв"
+                onClick={() => goTo((index + 1) % items.length)}
+                className="liquid-glass rounded-full h-10 w-10 flex items-center justify-center text-white"
+              >
+                <Chevron className="h-5 w-5" />
+              </button>
+            </div>
+          ) : null}
+        </div>
+
+        <div ref={trackRef} className="no-bar flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2">
+          {items.map((r, i) => (
+            <article
+              key={i}
+              className="liquid-glass rounded-[1.25rem] p-6 md:p-8 snap-center shrink-0 flex flex-col w-[86%] sm:w-[70%] lg:w-[calc(50%-0.5rem)]"
+            >
+              <span className="font-heading italic text-accent-soft text-5xl leading-none">“</span>
+              <p className="font-heading italic text-white text-xl md:text-2xl leading-snug mt-2">{r.text}</p>
+              <div className="flex-1" />
+              <p className="mt-6 text-sm text-white/70 font-body font-light">
+                {r.author}
+                {r.source ? " · " + r.source : ""}
+              </p>
+            </article>
+          ))}
+        </div>
+
+        {many ? (
+          <div className="flex items-center gap-2 mt-4">
+            {items.map((r, i) => (
+              <button
+                key={i}
+                type="button"
+                aria-label={"Отзыв " + (i + 1)}
+                onClick={() => goTo(i)}
+                className={
+                  "h-1.5 rounded-full transition-all " +
+                  (i === index ? "w-7 bg-accent" : "w-2.5 bg-white/25 hover:bg-white/50")
+                }
+              />
+            ))}
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
   function Gallery() {
     const c = useContent();
     const g = c.gallery;
@@ -1214,12 +1373,7 @@
           ))}
         </div>
 
-        {g.quote ? (
-          <div className="liquid-glass rounded-[1.25rem] p-6 md:p-10 mt-10 max-w-4xl">
-            <p className="font-heading italic text-white text-2xl md:text-[2rem] leading-tight">{g.quote}</p>
-            <p className="mt-5 text-sm text-white/70 font-body font-light">{g.quoteAuthor}</p>
-          </div>
-        ) : null}
+        <Reviews title={g.reviewsTitle} items={g.reviews || []} />
       </section>
     );
   }
@@ -1599,6 +1753,16 @@
       setDirty(true);
     };
 
+    const moveIn = (path, list, i, dir) => {
+      const j = i + dir;
+      if (j < 0 || j >= list.length) return;
+      const next = list.slice();
+      const tmp = next[i];
+      next[i] = next[j];
+      next[j] = tmp;
+      upd(path, next);
+    };
+
     const save = () => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
       onApply(draft);
@@ -1794,8 +1958,44 @@
                 <Field label="Заголовок, строка 2" value={g.titleLine2} onChange={(v) => upd(["gallery", "titleLine2"], v)} />
               </div>
               <ImageList label="Фотографии студии" items={g.photos} onChange={(v) => upd(["gallery", "photos"], v)} />
-              <Field label="Отзыв" value={g.quote} onChange={(v) => upd(["gallery", "quote"], v)} textarea rows={4} />
-              <Field label="Автор отзыва" value={g.quoteAuthor} onChange={(v) => upd(["gallery", "quoteAuthor"], v)} />
+
+              <Field label="Заголовок блока отзывов" value={g.reviewsTitle} onChange={(v) => upd(["gallery", "reviewsTitle"], v)} />
+              <div>
+                <span className="adm-label">Отзывы</span>
+                <p className="text-xs text-white/40 font-body mt-1">
+                  Переносите сюда настоящие отзывы гостей — с Яндекс.Карт, 2ГИС или из личных сообщений.
+                  Порядок задаёт порядок листания на сайте.
+                </p>
+                <div className="mt-3 space-y-4">
+                  {(g.reviews || []).map((r, i) => (
+                    <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 space-y-3">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs text-white/40 font-body">Отзыв {i + 1}</span>
+                        <div className="flex items-center gap-2">
+                          <button className="adm-btn adm-btn-icon" onClick={() => moveIn(["gallery", "reviews"], g.reviews, i, -1)}>↑</button>
+                          <button className="adm-btn adm-btn-icon" onClick={() => moveIn(["gallery", "reviews"], g.reviews, i, 1)}>↓</button>
+                          <button className="adm-btn adm-btn-icon adm-btn-danger"
+                            onClick={() => upd(["gallery", "reviews"], g.reviews.filter((_, j) => j !== i))}>
+                            Удалить
+                          </button>
+                        </div>
+                      </div>
+                      <Field label="Текст" value={r.text} textarea rows={4}
+                        onChange={(v) => upd(["gallery", "reviews"], g.reviews.map((x, j) => (j === i ? Object.assign({}, x, { text: v }) : x)))} />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <Field label="Имя" value={r.author}
+                          onChange={(v) => upd(["gallery", "reviews"], g.reviews.map((x, j) => (j === i ? Object.assign({}, x, { author: v }) : x)))} />
+                        <Field label="Источник" placeholder="отзыв на Яндекс.Картах" value={r.source}
+                          onChange={(v) => upd(["gallery", "reviews"], g.reviews.map((x, j) => (j === i ? Object.assign({}, x, { source: v }) : x)))} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <button className="adm-btn adm-btn-primary mt-3"
+                  onClick={() => upd(["gallery", "reviews"], (g.reviews || []).concat({ text: "", author: "", source: "" }))}>
+                  + Добавить отзыв
+                </button>
+              </div>
             </div>
           ) : null}
 
